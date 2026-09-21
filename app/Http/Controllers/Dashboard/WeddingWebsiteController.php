@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWeddingWebsiteRequest;
 use App\Http\Requests\UpdateWeddingWebsiteRequest;
+use App\Http\Requests\WeddingContentRequest;
 use App\Models\WeddingWebsite;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,6 +35,9 @@ class WeddingWebsiteController extends Controller
                 'wedding_at',
                 'status',
                 'updated_at',
+                'timezone',
+                'media',
+                'venue_name',
             ]);
 
         return Inertia::render('dashboard', [
@@ -41,10 +48,11 @@ class WeddingWebsiteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
         return Inertia::render('wedding-websites/create', [
             'themes' => $this->themes(),
+            'selectedTheme' => in_array($request->input('theme'), array_column($this->themes(), 'id'), true) ? $request->input('theme') : 'classic',
         ]);
     }
 
@@ -53,7 +61,7 @@ class WeddingWebsiteController extends Controller
      */
     public function store(StoreWeddingWebsiteRequest $request): RedirectResponse
     {
-        $attributes = $request->validated();
+        $attributes = $this->attributes($request);
         $attributes['published_at'] = $attributes['status'] === 'published' ? now() : null;
 
         $weddingWebsite = $request->user()->weddingWebsites()->create($attributes);
@@ -72,6 +80,7 @@ class WeddingWebsiteController extends Controller
         return Inertia::render('wedding-websites/edit', [
             'weddingWebsite' => $weddingWebsite,
             'themes' => $this->themes(),
+            'uploadLimit' => UploadedFile::getMaxFilesize(),
         ]);
     }
 
@@ -80,7 +89,7 @@ class WeddingWebsiteController extends Controller
      */
     public function update(UpdateWeddingWebsiteRequest $request, WeddingWebsite $weddingWebsite): RedirectResponse
     {
-        $attributes = $request->validated();
+        $attributes = $this->attributes($request);
         $attributes['published_at'] = $attributes['status'] === 'published'
             ? ($weddingWebsite->published_at ?? now())
             : null;
@@ -96,7 +105,9 @@ class WeddingWebsiteController extends Controller
     public function destroy(WeddingWebsite $weddingWebsite): RedirectResponse
     {
         $this->ensureOwnedByCurrentUser($weddingWebsite);
+        $paths = array_column($weddingWebsite->media ?? [], 'path');
         $weddingWebsite->delete();
+        Storage::disk('public')->delete($paths);
 
         return to_route('dashboard')->with('success', 'Website undangan berhasil dihapus.');
     }
@@ -104,18 +115,37 @@ class WeddingWebsiteController extends Controller
     /** @return array<int, array{id: string, name: string, description: string}> */
     private function themes(): array
     {
-        return [
-            [
-                'id' => 'classic',
-                'name' => 'Classic',
-                'description' => 'Elegan, hangat, dan fokus pada detail acara.',
-            ],
-            [
-                'id' => 'garden',
-                'name' => 'Garden',
-                'description' => 'Segar dengan nuansa hijau dan tampilan natural.',
-            ],
-        ];
+        return config('wedding.themes');
+    }
+
+    public function preview(Request $request, WeddingWebsite $weddingWebsite): \Symfony\Component\HttpFoundation\Response
+    {
+        $this->ensureOwnedByCurrentUser($weddingWebsite);
+
+        $response = Inertia::render('wedding/show', [
+            'wedding' => $weddingWebsite->publicData(), 'preview' => true, 'demo' => false,
+            'guest' => null, 'wishes' => [], 'editUrl' => route('wedding-websites.edit', $weddingWebsite),
+        ])->toResponse($request);
+        $response->headers->set('Cache-Control', 'private, no-store');
+
+        return $response;
+    }
+
+    /** @return array<string, mixed> */
+    private function attributes(WeddingContentRequest $request): array
+    {
+        $data = $request->validated();
+        $timezone = $data['timezone'] ?? 'Asia/Jakarta';
+        if (! empty($data['wedding_at'])) {
+            $data['wedding_at'] = Carbon::parse($data['wedding_at'], $timezone)->utc();
+        }
+        if (isset($data['content']['events'])) {
+            foreach ($data['content']['events'] as &$event) {
+                $event['at'] = Carbon::parse($event['at'], $timezone)->utc()->toIso8601String();
+            }
+        }
+
+        return $data;
     }
 
     private function ensureOwnedByCurrentUser(WeddingWebsite $weddingWebsite): void

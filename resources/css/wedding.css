@@ -1,0 +1,444 @@
+.wedding-surface {
+    --paper: #f6f1e7;
+    --ink: #443d32;
+    --accent: #7d5a40;
+    --line: #443d3233;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Instrument Sans', sans-serif;
+    color-scheme: light;
+}
+.wedding-surface[data-theme='garden'] {
+    --paper: #f0f1e8;
+    --ink: #354b36;
+    --accent: #5f7046;
+    --line: #354b3633;
+}
+.wedding-surface[data-theme='editorial'] {
+    --paper: #f7f6f2;
+    --ink: #222722;
+    --accent: #9b382e;
+    --line: #22272233;
+}
+.wedding-surface[data-theme='heritage'] {
+    --paper: #eee0c8;
+    --ink: #533426;
+    --accent: #98603b;
+    --line: #53342644;
+}
+.wedding-surface[data-theme='nocturne'] {
+    --paper: #1d2427;
+    --ink: #eee8d8;
+    --accent: #d2b57b;
+    --line: #eee8d844;
+    color-scheme: dark;
+}
+.wedding-surface[data-theme='terracotta'] {
+    --paper: #f0ddce;
+    --ink: #713e30;
+    --accent: #a65338;
+    --line: #713e3033;
+}
+.wedding-surface a:focus-visible,
+.wedding-surface button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 5px;
+}
+.wedding-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+}
+.invitation-cover {
+    position: relative;
+    isolation: isolate;
+    min-height: 85svh;
+    padding: 90px 7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+}
+.cover-heading {
+    position: relative;
+    z-index: 2;
+}
+.cover-names {
+    display: flex;
+    flex-direction: column;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(54px, 8vw, 120px);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    margin: 34px 0;
+    overflow-wrap: anywhere;
+}
+.cover-names i {
+    font-size: 0.45em;
+    line-height: 1.8;
+    color: var(--accent);
+    font-weight: 400;
+}
+.cover-date {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-top: 28px;
+}
+.cover-place {
+    display: block;
+    font-size: 11px;
+    margin-top: 12px;
+    letter-spacing: 0.06em;
+}
+.cover-art {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin-top: 30px;
+}
+.cover-art.has-photo {
+    width: min(280px, 70vw);
+    height: 320px;
+    margin-top: 40px;
+}
+.cover-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cover-monogram {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 26px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+}
+.cover-monogram i {
+    font-size: 0.7em;
+    margin: 0 6px;
+    opacity: 0.45;
+}
+.cover-caption {
+    display: none;
+}
+.cover-ornament {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid var(--line);
+    pointer-events: none;
+}
+[data-theme='classic'] .cover-ornament::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--line);
+}
+[data-theme='garden'] .cover-ornament {
+    inset: 32px max(24px, 12%);
+    border-radius: 50% 50% 0 0;
+    border-color: var(--accent);
+}
+[data-theme='garden'] .cover-art.has-photo {
+    border-radius: 160px 160px 0 0;
+    overflow: hidden;
+}
+[data-theme='garden'] .cover-names {
+    font-style: italic;
+}
+[data-theme='garden'] .cover-ornament::before,
+[data-theme='garden'] .cover-ornament::after {
+    content: '';
+    position: absolute;
+    width: 65px;
+    height: 160px;
+    border: 1px solid var(--accent);
+    border-radius: 100% 0 100% 0;
+    bottom: -10px;
+    left: -24px;
+    transform: rotate(-25deg);
+}
+[data-theme='garden'] .cover-ornament::after {
+    left: auto;
+    right: -24px;
+    transform: scaleX(-1) rotate(-25deg);
+}
+[data-theme='editorial'] .invitation-cover {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    text-align: left;
+    gap: 5%;
+    padding: 60px 6%;
+}
+[data-theme='editorial'] .cover-names {
+    font-size: clamp(55px, 8vw, 130px);
+}
+[data-theme='editorial'] .cover-names i {
+    font-style: normal;
+    line-height: 1.2;
+}
+[data-theme='editorial'] .cover-art {
+    width: 100%;
+    height: 65vh;
+    min-height: 350px;
+    background: #dcded6;
+    margin: 0;
+    align-self: stretch;
+}
+[data-theme='editorial'] .cover-monogram {
+    border: 0;
+    border-radius: 0;
+    font-size: 5rem;
+    color: #70796c;
+}
+[data-theme='editorial'] .cover-caption {
+    display: block;
+    position: absolute;
+    bottom: 18px;
+    left: 22px;
+    color: #222;
+    background: #f7f6f2db;
+    padding: 4px 8px;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+}
+[data-theme='editorial'] .cover-ornament {
+    border: 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    inset: 24px;
+}
+[data-theme='heritage'] .invitation-cover {
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+[data-theme='heritage'] .cover-ornament {
+    inset: 14px;
+    border: 12px double var(--accent);
+}
+[data-theme='heritage'] .cover-ornament::before,
+[data-theme='heritage'] .cover-ornament::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 12px;
+    height: 36px;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            transparent 0 14px,
+            var(--accent) 14px 15px,
+            transparent 15px 29px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            transparent 0 14px,
+            var(--accent) 14px 15px,
+            transparent 15px 29px
+        );
+    opacity: 0.6;
+}
+[data-theme='heritage'] .cover-ornament::after {
+    top: auto;
+    bottom: 12px;
+}
+[data-theme='heritage'] .cover-names {
+    font-size: clamp(50px, 7vw, 95px);
+}
+[data-theme='nocturne'] .cover-names {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2em;
+    justify-content: center;
+    font-size: clamp(48px, 7vw, 108px);
+}
+[data-theme='nocturne'] .cover-names i {
+    line-height: 1.5;
+}
+[data-theme='nocturne'] .cover-ornament {
+    border-width: 0 1px;
+    inset: 40px;
+}
+[data-theme='nocturne'] .cover-ornament::before {
+    content: '✦';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    color: var(--accent);
+    font-size: 34px;
+}
+[data-theme='nocturne'] .cover-art.has-photo {
+    height: 230px;
+    width: min(560px, 80vw);
+}
+[data-theme='terracotta'] .invitation-cover {
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 12%;
+}
+[data-theme='terracotta'] .cover-ornament {
+    width: min(65vw, 700px);
+    height: min(65vw, 700px);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    inset: auto -15% -25% auto;
+    box-shadow:
+        0 0 0 20px var(--paper),
+        0 0 0 21px var(--line),
+        0 0 0 42px var(--paper),
+        0 0 0 43px var(--line);
+}
+[data-theme='terracotta'] .cover-art {
+    position: absolute;
+    right: 9%;
+    bottom: 12%;
+    transform: rotate(7deg);
+}
+[data-theme='terracotta'] .cover-art.has-photo {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    transform: rotate(-4deg);
+    border: 8px solid #fff9ee;
+}
+.invitation-cover--compact {
+    min-height: 340px;
+    height: 340px;
+    padding: 40px 24px !important;
+    pointer-events: none;
+}
+.invitation-cover--compact .cover-names {
+    font-size: 43px !important;
+    margin: 20px 0;
+}
+.invitation-cover--compact .wedding-eyebrow {
+    font-size: 7px;
+}
+.invitation-cover--compact .cover-date {
+    font-size: 8px;
+    margin-top: 15px;
+}
+.invitation-cover--compact .cover-place {
+    font-size: 8px;
+}
+.invitation-cover--compact .cover-art {
+    width: 44px;
+    height: 44px;
+    min-height: 0;
+    margin-top: 16px;
+}
+.invitation-cover--compact .cover-monogram {
+    font-size: 14px;
+}
+[data-theme='editorial'] .invitation-cover--compact .cover-art {
+    height: 250px;
+    width: 100%;
+    margin: 0;
+}
+.wedding-section {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 85px 28px;
+}
+.wedding-section h2 {
+    font:
+        400 clamp(32px, 4vw, 54px)/1.15 Georgia,
+        serif;
+    letter-spacing: -0.025em;
+    margin-top: 20px;
+}
+.wedding-section h3 {
+    font:
+        400 30px/1.25 Georgia,
+        serif;
+}
+.wedding-section p {
+    line-height: 1.9;
+}
+.wedding-rule {
+    border-top: 1px solid var(--line);
+}
+.wedding-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--accent);
+    padding: 13px 22px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--paper);
+    background: var(--accent);
+    cursor: pointer;
+}
+.wedding-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.wedding-button--outline {
+    color: var(--ink);
+    background: transparent;
+    border-color: var(--line);
+}
+.wedding-input {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 14px;
+    border-radius: 0;
+}
+.wedding-input:focus {
+    outline: 1px solid var(--accent);
+}
+.wedding-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 18px 12px;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+@media (max-width: 640px) {
+    [data-theme='editorial'] .invitation-cover:not(.invitation-cover--compact) {
+        grid-template-columns: 1fr;
+        padding: 60px 32px;
+    }
+    [data-theme='editorial'] .cover-art {
+        height: 360px;
+        min-height: 0;
+    }
+    [data-theme='terracotta'] .cover-art:not(.has-photo) {
+        display: none;
+    }
+    .wedding-section {
+        padding: 60px 24px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .wedding-surface * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

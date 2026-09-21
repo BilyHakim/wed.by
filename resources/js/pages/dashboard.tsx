@@ -1,6 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import { CalendarDays, ExternalLink, Heart, Pencil, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { WeddingCover } from '@/components/wedding-cover';
+import { index as guestIndex } from '@/routes/guests';
+import type { Wedding } from '@/types/wedding';
+import { eventDate } from '@/types/wedding';
 import {
     Card,
     CardContent,
@@ -12,7 +16,7 @@ import { dashboard } from '@/routes';
 import { create, edit } from '@/routes/wedding-websites';
 import { show } from '@/routes/wedding';
 
-type WeddingWebsite = {
+type WeddingWebsite = Wedding & {
     id: number;
     title: string;
     slug: string;
@@ -79,8 +83,11 @@ export default function Dashboard({
                                 className="overflow-hidden pt-0"
                             >
                                 <div
-                                    className={`h-28 ${website.theme === 'garden' ? 'bg-gradient-to-br from-emerald-100 via-stone-50 to-lime-100' : 'bg-gradient-to-br from-rose-100 via-amber-50 to-orange-100'}`}
-                                />
+                                    className="wedding-surface"
+                                    data-theme={website.theme}
+                                >
+                                    <WeddingCover wedding={website} compact />
+                                </div>
                                 <CardHeader>
                                     <div className="flex items-start justify-between gap-3">
                                         <div>
@@ -105,14 +112,22 @@ export default function Dashboard({
                                     <div className="text-muted-foreground flex items-center gap-2 text-sm">
                                         <CalendarDays className="size-4" />
                                         {website.wedding_at
-                                            ? new Intl.DateTimeFormat('id-ID', {
-                                                  dateStyle: 'long',
-                                              }).format(
-                                                  new Date(website.wedding_at),
+                                            ? eventDate(
+                                                  website.wedding_at,
+                                                  website.timezone,
                                               )
                                             : 'Tanggal belum diatur'}
                                     </div>
                                     <div className="flex gap-2">
+                                        <Button
+                                            asChild
+                                            size="sm"
+                                            variant="outline"
+                                        >
+                                            <Link href={guestIndex(website.id)}>
+                                                Tamu & RSVP
+                                            </Link>
+                                        </Button>
                                         <Button
                                             asChild
                                             size="sm"

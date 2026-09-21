@@ -6,7 +6,13 @@ import {
 import { dashboard } from '@/routes';
 import { create } from '@/routes/wedding-websites';
 
-export default function CreateWeddingWebsite({ themes }: { themes: Theme[] }) {
+export default function CreateWeddingWebsite({
+    themes,
+    selectedTheme,
+}: {
+    themes: Theme[];
+    selectedTheme: string;
+}) {
     return (
         <>
             <Head title="Buat website undangan" />
@@ -17,10 +23,14 @@ export default function CreateWeddingWebsite({ themes }: { themes: Theme[] }) {
                     </h1>
                     <p className="text-muted-foreground mt-1 text-sm">
                         Isi informasi dasar, pilih tema, lalu simpan sebagai
-                        draft atau langsung publish.
+                        draft atau langsung publish. Foto galeri dan lagu dapat
+                        diunggah setelah undangan pertama kali disimpan.
                     </p>
                 </div>
-                <WeddingWebsiteForm themes={themes} />
+                <WeddingWebsiteForm
+                    themes={themes}
+                    selectedTheme={selectedTheme}
+                />
             </div>
         </>
     );

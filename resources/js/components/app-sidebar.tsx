@@ -14,9 +14,11 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as themes } from '@/routes/themes';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
+    { title: 'Koleksi tema', href: themes(), icon: Heart },
     {
         title: 'Dashboard',
         href: dashboard(),

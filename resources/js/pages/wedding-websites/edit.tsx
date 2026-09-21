@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { ExternalLink } from 'lucide-react';
 import {
     WeddingWebsiteForm,
@@ -8,14 +8,20 @@ import {
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
 import { show } from '@/routes/wedding';
+import { preview, destroy } from '@/routes/wedding-websites';
+import { index as guests } from '@/routes/guests';
+import { WeddingMediaEditor } from '@/components/wedding-media-editor';
 
 export default function EditWeddingWebsite({
     weddingWebsite,
     themes,
+    uploadLimit,
 }: {
     weddingWebsite: WeddingWebsiteFormData;
     themes: Theme[];
+    uploadLimit: number;
 }) {
+    const { success } = usePage().props;
     return (
         <>
             <Head title={`Edit ${weddingWebsite.title}`} />
@@ -45,6 +51,51 @@ export default function EditWeddingWebsite({
                     themes={themes}
                     weddingWebsite={weddingWebsite}
                 />
+                {typeof success === 'string' && (
+                    <p role="status" className="rounded-lg border p-4 text-sm">
+                        {success}
+                    </p>
+                )}
+                <div className="flex flex-wrap gap-3">
+                    <Button asChild variant="outline">
+                        <a href="#media">Foto, galeri & lagu</a>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href={preview(weddingWebsite.id)} target="_blank">
+                            Pratinjau tersimpan
+                        </Link>
+                    </Button>
+                    <Button asChild>
+                        <Link href={guests(weddingWebsite.id)}>
+                            Kelola tamu & RSVP
+                        </Link>
+                    </Button>
+                </div>
+                <WeddingMediaEditor
+                    id={weddingWebsite.id}
+                    media={weddingWebsite.media ?? []}
+                    uploadLimit={uploadLimit}
+                />
+                <section className="rounded-xl border border-red-200 p-5">
+                    <h2 className="font-medium">Hapus undangan</h2>
+                    <p className="text-muted-foreground my-3 text-sm">
+                        Undangan beserta data tamu dan RSVP akan dihapus
+                        permanen.
+                    </p>
+                    <Button
+                        variant="destructive"
+                        onClick={() => {
+                            if (
+                                window.confirm(
+                                    'Hapus undangan ini beserta seluruh data tamu dan RSVP? Tindakan ini tidak dapat dibatalkan.',
+                                )
+                            )
+                                router.delete(destroy.url(weddingWebsite.id));
+                        }}
+                    >
+                        Hapus undangan
+                    </Button>
+                </section>
             </div>
         </>
     );
