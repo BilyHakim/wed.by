@@ -14,6 +14,16 @@
     --accent: #5f7046;
     --line: #354b3633;
 }
+.wedding-surface[data-theme='blossom'] {
+    --paper: #fff8f5;
+    --ink: #51413f;
+    --accent: #a9606f;
+    --line: #a9606f38;
+    background:
+        radial-gradient(circle at 8% 16%, #efc8cc33 0 3px, transparent 4px),
+        radial-gradient(circle at 92% 78%, #cbd7bc40 0 4px, transparent 5px),
+        var(--paper);
+}
 .wedding-surface[data-theme='editorial'] {
     --paper: #f7f6f2;
     --ink: #222722;
@@ -137,6 +147,9 @@
     border: 1px solid var(--line);
     pointer-events: none;
 }
+.flower-petals {
+    display: none;
+}
 [data-theme='classic'] .cover-ornament::after {
     content: '';
     position: absolute;
@@ -166,6 +179,109 @@
     bottom: -10px;
     left: -24px;
     transform: rotate(-25deg);
+}
+[data-theme='blossom'] .invitation-cover {
+    background:
+        radial-gradient(circle at 18% 22%, #f4d9dc 0 4%, transparent 4.2%),
+        radial-gradient(circle at 82% 76%, #dde5d4 0 5%, transparent 5.2%);
+}
+[data-theme='blossom'] .cover-heading,
+[data-theme='blossom'] .cover-art {
+    animation: blossom-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-theme='blossom'] .cover-art {
+    animation-delay: 180ms;
+}
+[data-theme='blossom'] .cover-names {
+    color: #714d55;
+    font-style: italic;
+}
+[data-theme='blossom'] .cover-art.has-photo {
+    border-radius: 50% 50% 14px 14px;
+    box-shadow: 0 22px 60px #8f59602b;
+    overflow: hidden;
+}
+[data-theme='blossom'] .cover-monogram {
+    border-color: var(--accent);
+    box-shadow:
+        0 0 0 8px #fff8f5,
+        0 0 0 9px var(--line);
+}
+[data-theme='blossom'] .cover-ornament {
+    inset: 26px;
+    border-color: var(--line);
+    border-radius: 45% 45% 12px 12px;
+}
+[data-theme='blossom'] .cover-ornament::before,
+[data-theme='blossom'] .cover-ornament::after {
+    content: '✿  ❀  ✿';
+    position: absolute;
+    color: var(--accent);
+    font-size: clamp(18px, 3vw, 34px);
+    letter-spacing: 0.25em;
+    filter: drop-shadow(20px 16px 0 #91a27d);
+}
+[data-theme='blossom'] .cover-ornament::before {
+    left: 18px;
+    top: 16px;
+    transform: rotate(-18deg);
+}
+[data-theme='blossom'] .cover-ornament::after {
+    right: 18px;
+    bottom: 16px;
+    transform: rotate(162deg);
+}
+[data-theme='blossom'] .flower-petals {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+}
+[data-theme='blossom'] .flower-petals span {
+    position: absolute;
+    top: -8%;
+    left: calc(10% + var(--petal-position, 0%));
+    width: 12px;
+    height: 18px;
+    border-radius: 90% 10% 80% 20%;
+    background: #d992a0aa;
+    animation: petal-fall 8s linear infinite;
+}
+[data-theme='blossom'] .flower-petals span:nth-child(1) {
+    --petal-position: 4%;
+    animation-delay: -1s;
+}
+[data-theme='blossom'] .flower-petals span:nth-child(2) {
+    --petal-position: 18%;
+    animation-delay: -5s;
+    animation-duration: 10s;
+}
+[data-theme='blossom'] .flower-petals span:nth-child(3) {
+    --petal-position: 31%;
+    animation-delay: -3s;
+}
+[data-theme='blossom'] .flower-petals span:nth-child(4) {
+    --petal-position: 45%;
+    animation-delay: -7s;
+    animation-duration: 11s;
+}
+[data-theme='blossom'] .flower-petals span:nth-child(5) {
+    --petal-position: 58%;
+    animation-delay: -2s;
+}
+[data-theme='blossom'] .flower-petals span:nth-child(6) {
+    --petal-position: 70%;
+    animation-delay: -6s;
+    animation-duration: 9s;
+}
+[data-theme='blossom'] .flower-petals span:nth-child(7) {
+    --petal-position: 80%;
+    animation-delay: -4s;
+}
+[data-theme='blossom'] .wedding-rule:nth-of-type(even) {
+    background: #f8e9e733;
 }
 [data-theme='garden'] .cover-ornament::after {
     left: auto;
@@ -420,6 +536,29 @@
     text-transform: uppercase;
     letter-spacing: 0.12em;
 }
+@keyframes blossom-rise {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes petal-fall {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -20px, 0) rotate(0deg);
+    }
+    12% {
+        opacity: 0.75;
+    }
+    100% {
+        opacity: 0;
+        transform: translate3d(55px, 100vh, 0) rotate(420deg);
+    }
+}
 @media (max-width: 640px) {
     [data-theme='editorial'] .invitation-cover:not(.invitation-cover--compact) {
         grid-template-columns: 1fr;
@@ -438,6 +577,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
     .wedding-surface * {
+        animation: none !important;
         scroll-behavior: auto !important;
         transition: none !important;
     }

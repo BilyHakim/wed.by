@@ -35,7 +35,7 @@ export default function Themes({ themes }: { themes: WeddingTheme[] }) {
             </header>
             <main className="mx-auto max-w-7xl px-6 py-16">
                 <p className="text-xs tracking-[.25em] uppercase">
-                    The invitation collection / 01—06
+                    The invitation collection / 01—07
                 </p>
                 <h1 className="mt-6 max-w-3xl font-serif text-5xl leading-tight md:text-7xl">
                     Sebuah undangan.
@@ -43,7 +43,7 @@ export default function Themes({ themes }: { themes: WeddingTheme[] }) {
                     <i>Seutuhnya kalian.</i>
                 </h1>
                 <p className="mt-6 max-w-xl text-sm leading-7 opacity-70">
-                    Enam pendekatan desain, dari surat klasik sampai halaman
+                    Tujuh pendekatan desain, dari surat klasik sampai halaman
                     editorial. Jelajahi contoh lengkap sebelum memilih. Semua
                     tema mendukung foto, acara, galeri, amplop digital, dan
                     RSVP.

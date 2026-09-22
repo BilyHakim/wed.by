@@ -14,6 +14,11 @@ export function WeddingCover({
             className={`invitation-cover ${compact ? 'invitation-cover--compact' : ''}`}
         >
             <div className="cover-ornament" aria-hidden="true" />
+            <div className="flower-petals" aria-hidden="true">
+                {Array.from({ length: 7 }, (_, index) => (
+                    <span key={index} />
+                ))}
+            </div>
             <div className="cover-heading">
                 <span className="wedding-eyebrow">
                     The wedding celebration of

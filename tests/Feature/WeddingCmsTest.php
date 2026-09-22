@@ -24,7 +24,7 @@ test('every theme has a public demo and can be selected when creating a website'
     expect($website->theme)->toBe($theme)
         ->and($website->wedding_at->format('H:i'))->toBe('02:00')
         ->and($website->content['events'][0]['at'])->toBe('2027-06-12T04:00:00+00:00');
-})->with(['classic', 'garden', 'editorial', 'heritage', 'nocturne', 'terracotta']);
+})->with(['classic', 'garden', 'blossom', 'editorial', 'heritage', 'nocturne', 'terracotta']);
 
 test('draft preview is owner only and does not publish the website', function () {
     $website = WeddingWebsite::factory()->create();
