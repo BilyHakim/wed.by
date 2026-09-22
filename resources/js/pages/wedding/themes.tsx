@@ -23,9 +23,9 @@ export default function Themes({ themes }: { themes: WeddingTheme[] }) {
         rsvp_enabled: true,
     };
     return (
-        <div className="min-h-screen bg-[#f7f5f0] text-[#30342e]">
+        <div className="bg-background text-foreground min-h-screen">
             <Head title="Koleksi tema" />
-            <header className="mx-auto flex max-w-7xl items-center justify-between border-b border-[#30342e]/20 px-6 py-6">
+            <header className="border-border mx-auto flex max-w-7xl items-center justify-between border-b px-6 py-6">
                 <Link href={home()} className="font-serif text-2xl">
                     wed.by
                 </Link>
@@ -54,7 +54,7 @@ export default function Themes({ themes }: { themes: WeddingTheme[] }) {
                             <Link
                                 href={show(theme.id)}
                                 aria-label={`Lihat contoh ${theme.name}`}
-                                className="wedding-surface block border border-black/10"
+                                className="wedding-surface border-border block border"
                                 data-theme={theme.id}
                             >
                                 <WeddingCover
@@ -93,7 +93,7 @@ export default function Themes({ themes }: { themes: WeddingTheme[] }) {
                     ))}
                 </div>
             </main>
-            <footer className="border-t border-black/10 px-6 py-8 text-center text-xs opacity-60">
+            <footer className="border-border border-t px-6 py-8 text-center text-xs opacity-60">
                 Dirancang untuk cerita yang berbeda. Wed.by.
             </footer>
         </div>
