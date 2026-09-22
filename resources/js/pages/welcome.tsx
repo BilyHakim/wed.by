@@ -3,11 +3,18 @@ import {
     ArrowRight,
     Check,
     Clock3,
+    Gift,
     Heart,
-    LayoutTemplate,
-    Link2,
-    Palette,
+    Images,
+    ListChecks,
+    MapPinned,
+    MessageCircleHeart,
+    Music2,
+    QrCode,
+    ScanLine,
+    ShieldCheck,
     Sparkles,
+    Users,
 } from 'lucide-react';
 import { dashboard, login, register } from '@/routes';
 import { index as themes, show as themeShow } from '@/routes/themes';
@@ -15,22 +22,73 @@ import { WeddingCover } from '@/components/wedding-cover';
 
 const features = [
     {
-        icon: LayoutTemplate,
-        title: 'Dikerjakan oleh kami',
+        icon: QrCode,
+        title: 'Pengalaman tamu lebih personal',
         description:
-            'Tim Wed.by menyiapkan undangan dari materi yang kalian kirimkan, tanpa perlu mengurus teknis sendiri.',
+            'Setiap tamu dapat menerima tautan dan QR code personal yang langsung membuka undangan atas nama mereka.',
     },
     {
-        icon: Palette,
-        title: 'Tema elegan',
+        icon: Users,
+        title: 'Data tamu lebih terorganisir',
         description:
-            'Pilih tampilan yang paling cocok dengan suasana hari spesial kalian.',
+            'RSVP, jumlah kehadiran, check-in, ucapan, dan daftar tamu dikelola dalam satu tempat.',
     },
     {
-        icon: Link2,
-        title: 'Pesanan terpantau',
+        icon: ShieldCheck,
+        title: 'Lebih aman dan terkendali',
         description:
-            'Pantau pembelian dan progres pengerjaan dari dashboard hingga undangan siap dibagikan.',
+            'Tautan tamu bersifat personal dan setiap ucapan dapat ditinjau sebelum ditampilkan di undangan.',
+    },
+];
+
+const invitationFeatures = [
+    {
+        icon: QrCode,
+        title: 'QR code personal',
+        description:
+            'QR otomatis untuk setiap tamu, siap dilihat atau diunduh untuk dibagikan secara personal.',
+    },
+    {
+        icon: ListChecks,
+        title: 'RSVP & kuota tamu',
+        description:
+            'Tamu dapat mengonfirmasi kehadiran dan jumlah peserta sesuai kuota yang sudah ditentukan.',
+    },
+    {
+        icon: ScanLine,
+        title: 'Check-in & laporan tamu',
+        description:
+            'Pantau tamu hadir, statistik RSVP, jumlah peserta, dan ekspor data ke file CSV.',
+    },
+    {
+        icon: MessageCircleHeart,
+        title: 'Ucapan dan doa',
+        description:
+            'Tamu dapat mengirimkan doa, sementara Anda tetap dapat meninjau ucapan sebelum ditampilkan.',
+    },
+    {
+        icon: Images,
+        title: 'Galeri foto',
+        description:
+            'Tampilkan foto sampul, foto pasangan, dan hingga 12 foto perjalanan kalian dalam satu undangan.',
+    },
+    {
+        icon: Music2,
+        title: 'Musik latar',
+        description:
+            'Tambahkan musik pilihan untuk membangun suasana yang lebih hangat ketika undangan dibuka.',
+    },
+    {
+        icon: MapPinned,
+        title: 'Peta & kalender',
+        description:
+            'Tautkan lokasi acara dan bantu tamu menyimpan jadwal langsung ke Google Calendar.',
+    },
+    {
+        icon: Gift,
+        title: 'Amplop digital',
+        description:
+            'Sediakan informasi rekening hadiah secara rapi dan mudah disalin oleh tamu.',
     },
 ];
 
@@ -61,7 +119,7 @@ export default function Welcome() {
 
                         <div className="hidden items-center gap-8 text-sm text-[#675f78] md:flex">
                             <a
-                                href="#fitur"
+                                href="#fitur-undangan"
                                 className="transition hover:text-[#7165a5]"
                             >
                                 Fitur
@@ -231,11 +289,10 @@ export default function Welcome() {
                         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
                             <div className="mx-auto max-w-2xl text-center">
                                 <p className="text-sm font-semibold tracking-[0.2em] text-[#7165a5] uppercase">
-                                    Layanan lengkap untuk kalian
+                                    Kenapa memilih Wed.by
                                 </p>
                                 <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
-                                    Fokus pada momen bahagia, biar kami urus
-                                    undangannya.
+                                    Bukan sekadar halaman undangan yang cantik.
                                 </h2>
                             </div>
 
@@ -260,7 +317,61 @@ export default function Welcome() {
                         </div>
                     </section>
 
-                    <section id="tema" className="py-24 sm:py-28">
+                    <section
+                        id="fitur-undangan"
+                        className="relative overflow-hidden py-24 sm:py-28"
+                    >
+                        <div className="absolute -top-32 right-0 size-80 rounded-full bg-[#b4d3d9]/45 blur-3xl" />
+                        <div className="absolute -bottom-32 left-0 size-80 rounded-full bg-[#bda6ce]/45 blur-3xl" />
+                        <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+                            <div className="grid gap-6 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+                                <div>
+                                    <p className="text-sm font-semibold tracking-[0.2em] text-[#7165a5] uppercase">
+                                        Fitur undangan
+                                    </p>
+                                    <h2 className="mt-4 max-w-xl font-serif text-4xl leading-tight sm:text-5xl">
+                                        Semua yang dibutuhkan, dalam satu
+                                        layanan.
+                                    </h2>
+                                </div>
+                                <p className="max-w-xl text-sm leading-7 text-[#675f78] lg:justify-self-end">
+                                    Dari undangan personal hingga pencatatan
+                                    tamu saat hari acara, setiap fitur dirancang
+                                    agar kalian dan para tamu mendapat
+                                    pengalaman yang lebih praktis.
+                                </p>
+                            </div>
+
+                            <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                {invitationFeatures.map((feature, index) => (
+                                    <article
+                                        key={feature.title}
+                                        className="group rounded-3xl border border-[#bda6ce]/60 bg-white/55 p-6 backdrop-blur-sm transition duration-300 hover:-translate-y-2 hover:border-[#9b8ec7] hover:bg-white/80 hover:shadow-xl hover:shadow-[#9b8ec7]/15"
+                                    >
+                                        <div className="flex items-start justify-between gap-4">
+                                            <span className="flex size-11 items-center justify-center rounded-2xl bg-[#b4d3d9]/65 text-[#4f6370] transition group-hover:scale-110 group-hover:rotate-6">
+                                                <feature.icon className="size-5" />
+                                            </span>
+                                            <span className="font-serif text-sm text-[#9b8ec7]">
+                                                {String(index + 1).padStart(
+                                                    2,
+                                                    '0',
+                                                )}
+                                            </span>
+                                        </div>
+                                        <h3 className="mt-6 text-lg font-semibold">
+                                            {feature.title}
+                                        </h3>
+                                        <p className="mt-3 text-sm leading-7 text-[#675f78]">
+                                            {feature.description}
+                                        </p>
+                                    </article>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="tema" className="bg-[#faf7f3] py-24 sm:py-28">
                         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
                             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
                                 <div className="max-w-2xl">
