@@ -283,6 +283,87 @@
 [data-theme='blossom'] .wedding-rule:nth-of-type(even) {
     background: #f8e9e733;
 }
+[data-theme='blossom'].sections-motion-ready .wedding-animated-section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    opacity: 0;
+    transform: perspective(1000px) translate3d(-90px, 80px, 0) rotateY(7deg)
+        rotateZ(-1.5deg) scale(0.9);
+    filter: blur(12px) saturate(0.65);
+    transition:
+        opacity 900ms ease,
+        transform 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+        filter 900ms ease;
+    will-change: opacity, transform, filter;
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section:nth-of-type(even) {
+    transform: perspective(1000px) translate3d(90px, 80px, 0) rotateY(-7deg)
+        rotateZ(1.5deg) scale(0.9);
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section.is-visible {
+    opacity: 1;
+    transform: perspective(1000px) translate3d(0, 0, 0) rotateY(0) rotateZ(0)
+        scale(1);
+    filter: blur(0) saturate(1);
+}
+[data-theme='blossom'].sections-motion-ready .wedding-animated-section::after {
+    content: '✿';
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    right: -0.12em;
+    color: #d992a0;
+    font-size: clamp(180px, 32vw, 520px);
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) rotate(-50deg) scale(0.15);
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section:nth-of-type(even)::after {
+    right: auto;
+    left: -0.12em;
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section.is-visible::after {
+    animation: blossom-watermark 1400ms 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section.is-visible
+    :is(h2, h3, blockquote) {
+    animation: blossom-title-pop 900ms 250ms cubic-bezier(0.16, 1.4, 0.3, 1)
+        both;
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section.is-visible
+    :is(article, form, img) {
+    animation: blossom-card-arrive 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section.is-visible
+    :is(article, form, img):nth-child(2) {
+    animation-delay: 180ms;
+}
+[data-theme='blossom'].sections-motion-ready
+    .wedding-animated-section.is-visible
+    :is(article, form, img):nth-child(3) {
+    animation-delay: 340ms;
+}
+[data-theme='blossom'] .wedding-button {
+    transition:
+        transform 250ms ease,
+        box-shadow 250ms ease,
+        background 250ms ease;
+}
+[data-theme='blossom'] .wedding-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow:
+        0 14px 30px #a9606f42,
+        0 0 0 7px #d992a01f;
+}
 [data-theme='garden'] .cover-ornament::after {
     left: auto;
     right: -24px;
@@ -559,6 +640,48 @@
         transform: translate3d(55px, 100vh, 0) rotate(420deg);
     }
 }
+@keyframes blossom-watermark {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%) rotate(-50deg) scale(0.15);
+    }
+    65% {
+        opacity: 0.13;
+        transform: translateY(-50%) rotate(12deg) scale(1.12);
+    }
+    100% {
+        opacity: 0.08;
+        transform: translateY(-50%) rotate(0) scale(1);
+    }
+}
+@keyframes blossom-title-pop {
+    0% {
+        opacity: 0;
+        letter-spacing: 0.16em;
+        transform: translateY(45px) scale(0.72) rotate(-3deg);
+    }
+    70% {
+        transform: translateY(-8px) scale(1.06) rotate(1deg);
+    }
+    100% {
+        opacity: 1;
+        letter-spacing: normal;
+        transform: translateY(0) scale(1) rotate(0);
+    }
+}
+@keyframes blossom-card-arrive {
+    0% {
+        opacity: 0;
+        transform: translateY(70px) rotate(4deg) scale(0.82);
+    }
+    70% {
+        transform: translateY(-8px) rotate(-1deg) scale(1.03);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0) scale(1);
+    }
+}
 @media (max-width: 640px) {
     [data-theme='editorial'] .invitation-cover:not(.invitation-cover--compact) {
         grid-template-columns: 1fr;
@@ -576,6 +699,11 @@
     }
 }
 @media (prefers-reduced-motion: reduce) {
+    [data-theme='blossom'].sections-motion-ready .wedding-animated-section {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
     .wedding-surface * {
         animation: none !important;
         scroll-behavior: auto !important;

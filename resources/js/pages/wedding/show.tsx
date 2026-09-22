@@ -229,6 +229,7 @@ export default function WeddingShow({
     const content = wedding.content ?? {};
     const { success } = usePage().props;
     const [opened, setOpened] = useState(preview);
+    const weddingSurface = useRef<HTMLElement>(null);
     const audio = useRef<HTMLAudioElement>(null);
     const [playing, setPlaying] = useState(false);
     const [musicError, setMusicError] = useState(false);
@@ -249,8 +250,44 @@ export default function WeddingShow({
             : []),
         ...(content.events ?? []),
     ];
+
+    useEffect(() => {
+        const surface = weddingSurface.current;
+
+        if (!surface || wedding.theme !== 'blossom') {
+            return;
+        }
+
+        const sections = surface.querySelectorAll<HTMLElement>(
+            '.wedding-animated-section',
+        );
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    entry.target.classList.toggle(
+                        'is-visible',
+                        entry.isIntersecting,
+                    );
+                });
+            },
+            {
+                rootMargin: '-10% 0px -10% 0px',
+                threshold: 0.08,
+            },
+        );
+
+        sections.forEach((section) => observer.observe(section));
+        surface.classList.add('sections-motion-ready');
+
+        return () => {
+            observer.disconnect();
+            surface.classList.remove('sections-motion-ready');
+        };
+    }, [opened, wedding.theme]);
+
     return (
         <main
+            ref={weddingSurface}
             className="wedding-surface min-h-screen"
             data-theme={wedding.theme}
         >
@@ -288,7 +325,7 @@ export default function WeddingShow({
             )}
             <WeddingCover wedding={wedding} />
             {!opened ? (
-                <section className="mx-auto max-w-md px-6 py-12 text-center">
+                <section className="wedding-animated-section mx-auto max-w-md px-6 py-12 text-center">
                     <p className="wedding-eyebrow">Kepada Yth.</p>
                     <p className="mt-4 font-serif text-3xl">
                         {guest?.name ?? 'Bapak / Ibu / Saudara / i'}
@@ -311,7 +348,7 @@ export default function WeddingShow({
             ) : (
                 <>
                     <section
-                        className="wedding-section text-center"
+                        className="wedding-animated-section wedding-section text-center"
                         id="pasangan"
                     >
                         <span className="wedding-eyebrow">
@@ -370,7 +407,10 @@ export default function WeddingShow({
                             </blockquote>
                         )}
                     </section>
-                    <section className="wedding-rule" id="acara">
+                    <section
+                        className="wedding-animated-section wedding-rule"
+                        id="acara"
+                    >
                         <div className="wedding-section text-center">
                             <span className="wedding-eyebrow">
                                 Save the date
@@ -446,7 +486,10 @@ export default function WeddingShow({
                         </div>
                     </section>
                     {wedding.story && (
-                        <section className="wedding-rule" id="cerita">
+                        <section
+                            className="wedding-animated-section wedding-rule"
+                            id="cerita"
+                        >
                             <div className="wedding-section grid gap-8 md:grid-cols-[1fr_1.5fr]">
                                 <div>
                                     <span className="wedding-eyebrow">
@@ -465,7 +508,10 @@ export default function WeddingShow({
                         </section>
                     )}
                     {(gallery.length > 0 || preview) && (
-                        <section className="wedding-rule" id="galeri">
+                        <section
+                            className="wedding-animated-section wedding-rule"
+                            id="galeri"
+                        >
                             <div className="wedding-section">
                                 <span className="wedding-eyebrow">
                                     A few of our favourite moments
@@ -498,7 +544,10 @@ export default function WeddingShow({
                             </div>
                         </section>
                     )}
-                    <section className="wedding-rule" id="rsvp">
+                    <section
+                        className="wedding-animated-section wedding-rule"
+                        id="rsvp"
+                    >
                         <div className="wedding-section max-w-xl text-center">
                             <span className="wedding-eyebrow">
                                 Kindly reply
@@ -539,7 +588,7 @@ export default function WeddingShow({
                         </div>
                     </section>
                     {(content.gifts?.length ?? 0) > 0 && (
-                        <section className="wedding-rule">
+                        <section className="wedding-animated-section wedding-rule">
                             <div className="wedding-section text-center">
                                 <span className="wedding-eyebrow">
                                     A little kindness
@@ -590,7 +639,10 @@ export default function WeddingShow({
                             </div>
                         </section>
                     )}
-                    <section className="wedding-rule" id="doa">
+                    <section
+                        className="wedding-animated-section wedding-rule"
+                        id="doa"
+                    >
                         <div className="wedding-section">
                             <span className="wedding-eyebrow">
                                 Words to keep
